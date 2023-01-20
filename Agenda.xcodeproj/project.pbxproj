@@ -13,6 +13,7 @@
 		33CCD3B6296C9F5D007591D3 /* AgendaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CCD3B5296C9F5D007591D3 /* AgendaApp.swift */; };
 		33CCD3BA296C9F5F007591D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33CCD3B9296C9F5F007591D3 /* Assets.xcassets */; };
 		33CCD3BD296C9F5F007591D3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33CCD3BC296C9F5F007591D3 /* Preview Assets.xcassets */; };
+		33E5C8F0297B1CBE002689DE /* NewEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5C8EF297B1CBE002689DE /* NewEventView.swift */; };
 		33F964DA29771DB300822348 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F964D929771DB300822348 /* NetworkHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +25,7 @@
 		33CCD3B5296C9F5D007591D3 /* AgendaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaApp.swift; sourceTree = "<group>"; };
 		33CCD3B9296C9F5F007591D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33CCD3BC296C9F5F007591D3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		33E5C8EF297B1CBE002689DE /* NewEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEventView.swift; sourceTree = "<group>"; };
 		33F964D929771DB300822348 /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -44,6 +46,7 @@
 				33969118296DEE8200CF5976 /* LoginView.swift */,
 				3396911C296DF30500CF5976 /* RegisterView.swift */,
 				3396911F296DF4C500CF5976 /* AgendaHome.swift */,
+				33E5C8EF297B1CBE002689DE /* NewEventView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 				33969119296DEE8200CF5976 /* LoginView.swift in Sources */,
 				33F964DA29771DB300822348 /* NetworkHelper.swift in Sources */,
 				3396911D296DF30500CF5976 /* RegisterView.swift in Sources */,
+				33E5C8F0297B1CBE002689DE /* NewEventView.swift in Sources */,
 				33CCD3B6296C9F5D007591D3 /* AgendaApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,7 +10,9 @@ struct LoginView: View {
     
     @State var email: String = ""
     @State var pass: String = ""
-    @State var shouldShowRegister: Bool = false
+    
+    @State private var shouldShowRegister: Bool = false
+    @State private var shouldShowAgenda: Bool = false
     
     
     var body: some View {
@@ -94,11 +96,8 @@ struct LoginView: View {
     
     var signInButton: some View {
         Button {
-            if email.isEmpty || pass.isEmpty {
-                print("Rellena los campos")
-            }else{
-                //Peticion y navegar
-            }
+            //login(email: email, pass: pass)
+            shouldShowAgenda = true
         } label: {
             Text("Sign In")
                 .foregroundColor(.white)
@@ -108,8 +107,46 @@ struct LoginView: View {
                 .cornerRadius(5)
                 .padding(.vertical, 50)
 
-        }
+        }.background(
+            NavigationLink(destination: AgendaHome(), isActive: $shouldShowAgenda) {
+                EmptyView()
+            }
+        )
         .padding(.horizontal,35)
+    }
+    
+    func login(email: String, pass: String) {
+        
+        //baseUrl + endpoint
+        let url = "https://superapi.netlify.app/api/login"
+        
+        //params
+        let dictionary: [String: Any] = [
+            "user" : email,
+            "pass" : pass
+        ]
+        
+        // petición
+        NetworkHelper.shared.requestProvider(url: url, params: dictionary) { data, response, error in
+            if let error = error {
+                onError(error: error.localizedDescription)
+            } else if let data = data, let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 { // esto daria ok
+                    onSuccess()
+                } else { // esto daria error
+                    onError(error: error?.localizedDescription ?? "Request Error")
+                }
+            }
+        }
+    }
+    
+    func onSuccess() {
+        // Navegación hacia la vista de Agenda
+        shouldShowAgenda = true
+    }
+    
+    func onError(error: String) {
+        print(error)
     }
         
 }

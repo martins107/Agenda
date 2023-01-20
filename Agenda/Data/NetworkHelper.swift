@@ -66,6 +66,7 @@ class NetworkHelper {
         
         //llamamos a la función requestApi
         requestApi(request: request) { data, response, error in
+            // Esta sentencia se utiliza porque las peticiones se hacen en background y los cambios que necesitaremos hacer en la View deberán ser obligatoriamente en el hilo principal (Main Thread)
             DispatchQueue.main.async {
                 completion(data, response, error)
             }
