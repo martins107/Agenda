@@ -72,9 +72,11 @@ struct AgendaHome: View {
                     LazyVStack(spacing: 1) {
                         ForEach(events){ event in
                             HStack{
+                                let timeInterval = TimeInterval(event.date)
+                                let dateConverted = Date(timeIntervalSince1970: timeInterval)
                                 Text(event.name)
                                 Spacer()
-                                Text("\(event.date)")
+                                Text("\(dateConverted.formatted())")
                             }
                             .padding(.horizontal,5)
                             .frame(height: 40)
@@ -87,7 +89,9 @@ struct AgendaHome: View {
             }
         }
         .sheet(isPresented: $shouldShowNewEvent, content: {
-            NewEventView()
+            NewEventView(shouldShowNewEvent: $shouldShowNewEvent){
+                getEvents()
+            }
         })
         .toolbar{
             Button{
