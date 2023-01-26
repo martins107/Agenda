@@ -108,8 +108,7 @@ struct RegisterView: View {
                 onError(error: error.localizedDescription)
             } else if let data = data, let response = response as? HTTPURLResponse {
                 
-                if response.statusCode == 200 {
-                    
+                if response.statusCode == 200 {                    
                     onSuccess()
                 } else{
                     

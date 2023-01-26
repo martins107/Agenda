@@ -96,8 +96,7 @@ struct LoginView: View {
     
     var signInButton: some View {
         Button {
-            //login(email: email, pass: pass)
-            shouldShowAgenda = true
+            login(email: email, pass: pass)
         } label: {
             Text("Sign In")
                 .foregroundColor(.white)
@@ -117,16 +116,13 @@ struct LoginView: View {
     
     func login(email: String, pass: String) {
         
-        //baseUrl + endpoint
         let url = "https://superapi.netlify.app/api/login"
         
-        //params
         let dictionary: [String: Any] = [
             "user" : email,
             "pass" : pass
         ]
         
-        // petición
         NetworkHelper.shared.requestProvider(url: url, params: dictionary) { data, response, error in
             if let error = error {
                 onError(error: error.localizedDescription)
@@ -141,7 +137,6 @@ struct LoginView: View {
     }
     
     func onSuccess() {
-        // Navegación hacia la vista de Agenda
         shouldShowAgenda = true
     }
     
