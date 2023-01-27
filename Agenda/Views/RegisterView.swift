@@ -13,6 +13,10 @@ struct RegisterView: View {
     @State var pass: String = ""
     @State var shouldShowRegister: Bool = false
     
+    @State private var shouldShowAlert: Bool = false
+    
+    @State var alertMsg: String = ""
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     
@@ -75,7 +79,19 @@ struct RegisterView: View {
     
     var signUpButton: some View {
         Button {
-            register(email: email, pass: pass)
+            if email.isEmpty || pass.isEmpty {
+                shouldShowAlert = true
+                alertMsg = "Field all the fields, please"
+            }else{
+                if pass.count < 8 {
+                    shouldShowAlert = true
+                    alertMsg = "Password is too short"
+                }else {
+                    register(email: email, pass: pass)
+                }
+            }
+            
+            
         } label: {
             Text("Sign Up")
                 .foregroundColor(.white)
@@ -87,22 +103,27 @@ struct RegisterView: View {
             
         }
         .padding(.horizontal,35)
+        .alert("Register Error", isPresented: $shouldShowAlert, actions: {
+            Button {
+                
+            } label: {
+                Text("Ok")
+            }
+        }) {
+            Text(alertMsg)
+        }
     }
     // MARK: - Private Methods
     
-    // Llamada a la petición de NetworkHelper que pronto pasaremos a viewModel
     private func register(email: String, pass: String) {
         
-        //baseUrl + endpoint
         let url = "https://superapi.netlify.app/api/register"
-        
-        //params
+    
         let dictionary: [String: Any] = [
             "user" : email,
             "pass" : pass
         ]
         
-        // petición
         NetworkHelper.shared.requestProvider(url: url, params: dictionary) { data, response, error in
             if let error = error {
                 onError(error: error.localizedDescription)

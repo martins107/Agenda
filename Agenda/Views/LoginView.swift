@@ -13,6 +13,9 @@ struct LoginView: View {
     
     @State private var shouldShowRegister: Bool = false
     @State private var shouldShowAgenda: Bool = false
+    @State private var shouldShowAlert: Bool = false
+    
+    @State var alertMsg: String = ""
     
     
     var body: some View {
@@ -87,6 +90,7 @@ struct LoginView: View {
                     .padding(.horizontal,35)
                     .padding(.bottom, 100)
                     
+                    
                 }
             }
         }
@@ -96,7 +100,13 @@ struct LoginView: View {
     
     var signInButton: some View {
         Button {
-            login(email: email, pass: pass)
+            if email.isEmpty || pass.isEmpty{
+                shouldShowAlert = true
+                alertMsg = "Field all fields"
+            }else{
+                login(email: email, pass: pass)
+            }
+            
         } label: {
             Text("Sign In")
                 .foregroundColor(.white)
@@ -112,6 +122,16 @@ struct LoginView: View {
             }
         )
         .padding(.horizontal,35)
+        .alert("Login Error", isPresented: $shouldShowAlert, actions: {
+            Button {
+                
+            } label: {
+                Text("Ok")
+            }
+        }) {
+            Text(alertMsg)
+        }
+        
     }
     
     func login(email: String, pass: String) {
@@ -127,9 +147,9 @@ struct LoginView: View {
             if let error = error {
                 onError(error: error.localizedDescription)
             } else if let data = data, let response = response as? HTTPURLResponse {
-                if response.statusCode == 200 { // esto daria ok
+                if response.statusCode == 200 {
                     onSuccess()
-                } else { // esto daria error
+                } else {
                     onError(error: error?.localizedDescription ?? "Request Error")
                 }
             }
@@ -141,9 +161,9 @@ struct LoginView: View {
     }
     
     func onError(error: String) {
-        print(error)
+        shouldShowAlert = true
+        alertMsg = "There are any user register with this data"
     }
-        
 }
 
 struct ContentView_Previews: PreviewProvider {

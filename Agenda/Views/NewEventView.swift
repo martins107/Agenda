@@ -12,6 +12,10 @@ struct NewEventView: View {
     @State var name: String = ""
     @State var date = Date()
     @Binding var shouldShowNewEvent : Bool
+    @State private var shouldShowAlert: Bool = false
+    
+    @State var alertMsg: String = ""
+    
     var completion: () -> () = {}
     
     var body: some View {
@@ -58,7 +62,12 @@ struct NewEventView: View {
                     Spacer()
                                     
                     Button {
-                        newEvent(name: name, date: date)
+                        if name.isEmpty {
+                            shouldShowAlert = true
+                            alertMsg = "Fill all the fields, please"
+                        }else {
+                            newEvent(name: name, date: date)
+                        }
                     } label: {
                         Text("Create Event")
                             .foregroundColor(.white)
@@ -71,6 +80,15 @@ struct NewEventView: View {
                     }
                     .padding(.bottom,50)
                     .padding(.horizontal,15)
+                    .alert("Create Event Error", isPresented: $shouldShowAlert, actions: {
+                        Button {
+                            
+                        } label: {
+                            Text("Ok")
+                        }
+                    }) {
+                        Text(alertMsg)
+                    }
                    
                     
                 }
@@ -81,23 +99,21 @@ struct NewEventView: View {
         
         let dateConverted = Int(date.timeIntervalSince1970)
         
-        //baseUrl + endpoint
         let url = "https://superapi.netlify.app/api/db/eventos"
         
-        //params
+        
         let dictionary: [String: Any] = [
             "name" : name,
             "date" : dateConverted
         ]
         
-        // petición
         NetworkHelper.shared.requestProvider(url: url, params: dictionary) { data, response, error in
             if let error = error {
                 onError(error: error.localizedDescription)
             } else if let data = data, let response = response as? HTTPURLResponse {
-                if response.statusCode == 200 { // esto daria ok
+                if response.statusCode == 200 {
                     onSuccess()
-                } else { // esto daria error
+                } else {
                     onError(error: error?.localizedDescription ?? "Request Error")
                 }
             }
@@ -109,7 +125,8 @@ struct NewEventView: View {
     }
     
     func onError(error: String) {
-        print(error)
+        shouldShowAlert = true
+        alertMsg = "Something was wrong"
     }
     
 }
